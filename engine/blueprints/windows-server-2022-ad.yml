@@ -1,0 +1,17 @@
+metadata:
+  name: "Windows Server 2022 Standard"
+  type: "server"
+  os_family: "windows"
+
+emulation:
+  services:
+    - { port: 445, name: "smb", banners: ["Windows Server 2022 Core"] }
+    - { port: 389, name: "ldap", status: "open" }
+  
+  file_tree:
+    C:\Users\Administrator\Documents:
+      - "dc_recovery_keys.txt"
+      - "backup_log.csv"
+    C:\Windows\System32\config:
+      - "SAM"
+      - "SECURITY"
