@@ -1,4 +1,4 @@
-# ANSANET: Automated Honeypot Framework & Training Simulator
+# 👨🏻‍💻 ANSANET: Automated Honeypot Framework & Training Simulator
 
 **ANSANET** is an ultra-lightweight, procedural network simulation framework designed for **Detection Engineering** training and **Deception** strategy validation. Unlike traditional honeypots that rely on heavy Virtual Machines or Containers, ANSANET emulates infrastructure "on-the-fly" using a **roguelike** approach to network generation.
 
@@ -15,6 +15,41 @@
 2. **Procedural Generation:** `network_generator.py` creates a unique IP/Host mapping.
 3. **Host Blueprinting:** `host_generator.py` "dresses" each node with virtual filesystems and services.
 4. **Active Alerting:** The **ANSANET Alert System** (Telegram Bot) notifies the SOC of deployment and events.
+
+## Quick Start
+
+1. It's highly recommended to create a virtual environment:
+
+    ```sh
+    $ python -m venv .venv
+    $ source .venv/bin/activate
+    ```
+
+2. Install the requirements:
+
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+3. Copy the included `.env.sample` to a file called `.env` and populate it using:
+
+- Your Telegram bot
+
+- Your Chat ID
+
+    **Notes:**
+
+    - If you want to create a Telegram bot, use the [BotFather](https://t.me/BotFather) service. Then open it (using https://t.me/[YourBotName] and start a chat.
+
+    - In order to get your Telegram Chat ID, use a service like [UserInfoBot](https://t.me/userinfobot).
+
+4. Start ANSANET:
+
+    ```sh
+    $ python ansanet.py
+    ```
+
+You should receive a message on your Telegram app displaying details of the generated network.
 
 ### 🛠️ Planned Features (Roadmap)
 

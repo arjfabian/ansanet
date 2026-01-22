@@ -7,6 +7,7 @@ from engine.host_generator import HostGenerator
 
 BASE_DIR = Path(__file__).resolve().parent
 PATH_NETWORK_PARAMETERS_YAML = BASE_DIR / "parameters" / "network.yml"
+PATH_NETWORK_MAP = BASE_DIR / "network_map.json"
 
 class NetworkGenerator:
     def __init__(self, config_path=PATH_NETWORK_PARAMETERS_YAML):
@@ -69,9 +70,7 @@ class NetworkGenerator:
             
         return nodes
 
-    def save(self, nodes):
-        output_file = BASE_DIR / "network_map.json"
-        
+    def save(self, nodes):       
         # In order to sort by IP, we must convert each each one to int using
         # split(). (e.g. "192.168.1.17" becomes ['192', '168', '1', '17'])
         nodes.sort(key=lambda x: [int(octet) for octet in x['ip'].split('.')])
@@ -85,7 +84,7 @@ class NetworkGenerator:
             },
             "nodes": nodes
         }
-        with open(output_file, "w") as f:
+        with open(PATH_NETWORK_MAP, "w") as f:
             json.dump(output, f, indent=4)
         return output
 
