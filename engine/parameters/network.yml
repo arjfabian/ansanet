@@ -1,0 +1,22 @@
+network:
+  id: "ANSANET-PROD-01"
+  base_ip: "192.168.1"   # The engine will append the host octet (.2 to .254)
+  mask: 24               # Standard Class C network
+  domain: "corp.ansanet.local"
+  
+  # Configuration for the Procedural Generator.
+  # The engine will validate:
+  #   - servers_min, servers_max > 0
+  #   - infra_min, infra_max > 0
+  #   - servers_min <= servers_max
+  #   - infra_min < infra_max
+  #   - servers_max + infra_max < hosts_min
+  generation_rules:
+    hosts_min: 5
+    hosts_max: 15
+    host_types:
+      servers_min: 1
+      servers_max: 2
+      infra_min: 1
+      infra_max: 2
+      # All free slots will be occupied by workstations      
