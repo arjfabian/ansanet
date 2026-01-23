@@ -1,6 +1,5 @@
 import yaml
 import random
-import glob
 from pathlib import Path
 
 # Path to the blueprints
@@ -23,27 +22,45 @@ fallback_blueprint = {
 }
 
 class HostGenerator:
+
     def __init__(self, blueprints_path=BLUEPRINTS_PATH):
         self.blueprints_path = blueprints_path
         self.catalog = { host_type: [] for host_type in valid_host_types}
         self._index_blueprints()
 
     def _index_blueprints(self):
-        yaml_files = glob.glob(str(self.blueprints_path / "*.yml"))
-        for file_path in yaml_files:
+        yaml_files = self.blueprints_path.glob("*.yml")
+        
+        for blueprint_file in yaml_files:
             try:
-                with open(file_path, 'r') as f:
+                with open(blueprint_file, 'r') as f:
                     data = yaml.safe_load(f)
-                    # SKIP THE FILE if it's empty or not a valid dictionary
-                    if not isinstance(data, dict):
-                        continue
                     
-                    b_type = data.get('metadata', {}).get('type')
-                    if b_type in self.catalog:
-                        self.catalog[b_type].append(Path(file_path).name)
-            except Exception:
-                # SKIP THE FILE in case of parsing errors
+                if not isinstance(data, dict):
+                    continue
+                
+                if 'metadata' not in data or 'type' not in data['metadata']:
+                    print(f"[!] Warning: {blueprint_file.name} missing 'metadata.type', skipping")
+                    continue
+                
+                b_type = data['metadata']['type']
+                if b_type not in self.catalog:
+                    print(f"[!] Warning: {blueprint_file.name} has invalid type '{b_type}', skipping")
+                    continue
+                
+                self.catalog[b_type].append(blueprint_file.name)
+                
+            except Exception as e:
+                print(f"[!] Error parsing {blueprint_file.name}: {e}")
                 continue
+
+        total_blueprints = sum(len(b) for b in self.catalog.values())
+        if total_blueprints == 0:
+            raise RuntimeError(f"[X] CRITICAL: No valid blueprints found in {self.blueprints_path}")
+        else:
+            for host_type, blueprints in self.catalog.items():
+                if not blueprints:
+                    print(f"[!] WARNING: No blueprints found for type '{host_type}'")
 
     def generate_host(self, node_type):
         """Selects a blueprint and returns the host's initial structure."""
