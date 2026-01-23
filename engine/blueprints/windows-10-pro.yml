@@ -1,0 +1,17 @@
+metadata:
+  name: "Windows 10 Pro"
+  type: "workstation"
+  os_family: "windows"
+
+emulation:
+  services:
+    - { port: 135, name: "msrpc" }
+    - { port: 139, name: "netbios" }
+    - { port: 445, name: "smb" }
+  
+  file_tree:
+    C:\Users\employee\Desktop:
+      - "quarterly_report.xlsx"
+      - "passwords.txt"
+    C:\Users\employee\Downloads:
+      - "suspicious.exe"

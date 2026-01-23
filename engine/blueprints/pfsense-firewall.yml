@@ -1,0 +1,16 @@
+metadata:
+  name: "pfSense 2.7.0"
+  type: "infra"
+  os_family: "bsd"
+
+emulation:
+  services:
+    - { port: 443, name: "https", banner: "pfSense WebGUI" }
+    - { port: 22, name: "ssh" }
+  
+  file_tree:
+    /conf:
+      - "config.xml"
+    /var/log:
+      - "firewall.log"
+      - "system.log"

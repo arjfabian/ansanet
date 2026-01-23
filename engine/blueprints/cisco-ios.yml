@@ -1,0 +1,15 @@
+metadata:
+  name: "Cisco IOS 15.2"
+  type: "infra"
+  os_family: "cisco"
+
+emulation:
+  services:
+    - { port: 22, name: "ssh", banner: "SSH-2.0-Cisco-1.25" }
+    - { port: 23, name: "telnet" }
+    - { port: 161, name: "snmp" }
+  
+  file_tree:
+    /flash:
+      - "startup-config"
+      - "running-config"

@@ -1,0 +1,18 @@
+metadata:
+  name: "Ubuntu Server 22.04 LTS"
+  type: "server"
+  os_family: "linux"
+
+emulation:
+  services:
+    - { port: 22, name: "ssh", banner: "OpenSSH_8.9p1 Ubuntu" }
+    - { port: 80, name: "http" }
+    - { port: 443, name: "https" }
+  
+  file_tree:
+    /var/www/html:
+      - "index.html"
+      - "config.php"
+    /home/ubuntu:
+      - ".bash_history"
+      - ".ssh/authorized_keys"
